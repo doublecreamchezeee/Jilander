@@ -13,7 +13,7 @@ function HomeScreen(): React.JSX.Element{
     const getThemeType = () => {
         switch (themeType) {
             case 0:
-                return 'dawn-bg-homescreen.jpg';
+                return 'night-bg-homescreen.jpg';
             case 1:
                 return 'dawn-bg-homescreen.jpg';
             case 2:
@@ -23,13 +23,18 @@ function HomeScreen(): React.JSX.Element{
         }
     };
 
+    const backgroundImagePaths = {
+        'night-bg-homescreen.jpg': require('../assets/night-bg-homescreen.jpg'),
+        'dawn-bg-homescreen.jpg': require('../assets/dawn-bg-homescreen.jpg'),
+        'sunset-bg-homescreen.jpg': require('../assets/sunset-bg-homescreen.jpg'),
+    };
 
     return (
     <View style={{
         flex: 100
     }}>
         <ImageBackground 
-            source={require(`../assets/${getThemeType()}`)}
+            source={backgroundImagePaths[getThemeType()]}
             resizeMode="cover"
             style={{
                 flex:1,
