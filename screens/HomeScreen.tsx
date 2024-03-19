@@ -1,68 +1,60 @@
-import Reactm, {useContext} from "react";
+import Reactm, {useContext, useEffect, useState} from "react";
 import { 
     View,
     Text,
     ImageBackground,
 } from "react-native";
 
-import Daytime, {DaytimeContext} from '../components/Daytime'
-
+import InfoTaskBoard from "../components/InfoTaskBoard";
+import Daytime from '../components/Daytime'
+import { DaytimeContext, DaytimeProvider } from "../context/DaytimeContext";
 function HomeScreen(): React.JSX.Element{
-    const themeType = useContext(DaytimeContext)
-
-    const getThemeType = () => {
-        switch (themeType) {
-            case 0:
-                return 'night-bg-homescreen.jpg';
-            case 1:
-                return 'dawn-bg-homescreen.jpg';
-            case 2:
-                return 'sunset-bg-homescreen.jpg';
-            default:
-                return 'dawn-bg-homescreen.jpg';
-        }
-    };
-
-    const backgroundImagePaths = {
+    const {type} = useContext(DaytimeContext)
+    const backgroundImagePaths: { [key: string]: any } = {
         'night-bg-homescreen.jpg': require('../assets/night-bg-homescreen.jpg'),
         'dawn-bg-homescreen.jpg': require('../assets/dawn-bg-homescreen.jpg'),
         'sunset-bg-homescreen.jpg': require('../assets/sunset-bg-homescreen.jpg'),
     };
-
     return (
-    <View style={{
-        flex: 100
-    }}>
-        <ImageBackground 
-            source={backgroundImagePaths[getThemeType()]}
-            resizeMode="cover"
-            style={{
-                flex:1,
-                justifyContent: "center"
-            }}>
-            <View style={{
-                flex: 10,
-            }}>
-            </View>
-            <View style={{
-                flex: 20,
-                justifyContent: 'center',
-                alignItems: 'center', 
-                flexDirection: 'column',
-            }}>
-                <Daytime/>
-            </View>
-            <View style={{
-                flex: 50,
-            }}>
-            </View>
-            <View style={{
-                flex: 20,
-            }}>
-            </View>
-        </ImageBackground>
-    </View>
-    )
+        <View style={{ flex: 100 }}>
+            <ImageBackground
+                source={backgroundImagePaths[type]}
+                resizeMode="cover"
+                style={{
+                    flex: 1,
+                    justifyContent: "center"
+                }}>
+                <View style={{ flex: 5 }}></View>
+                <View style={{
+                    flex: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}>
+                    <Daytime/>
+                </View>
+                
+                <View style={{ flex: 50 }}>
+                    <View style={{
+                        flex: 15,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        {/* Render any component that consumes DaytimeContext here */}
+                    </View>
+                </View>
+                <View style={{ flex: 20 }}></View>
+            </ImageBackground>
+        </View>
+    );
+
 }
 
-export default HomeScreen;
+// Wrap HomeScreen with DaytimeProvider to provide the context
+const HomeScreenWithDaytimeProvider = () => (
+    <DaytimeProvider>
+        <HomeScreen />
+    </DaytimeProvider>
+);
+
+export default HomeScreenWithDaytimeProvider;
