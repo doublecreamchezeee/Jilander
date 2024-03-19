@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import styles from '../public/css/styles'; 
-
+import Task from './Task'
 function InfoTaskBoard(){
     const [text, setText] = useState<string>(''); // Chỉ định kiểu dữ liệu là string
     
@@ -29,10 +29,12 @@ function InfoTaskBoard(){
               value={text}
             />
             <TouchableOpacity style={styles.addButton} onPress={onSubmitEditing}>
-              <Text style={styles.addButtonText}>Add task</Text>
+              <Text style={styles.buttonText}>Add task</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.taskListContainer}></View>
+          <View style={styles.taskListContainer}>
+            <Task/>
+          </View>
         </View>
       );
 }
