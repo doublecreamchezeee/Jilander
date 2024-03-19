@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "119968385962",
+    "firebase_url": "https://jilander-79acb-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "jilander-79acb",
+    "storage_bucket": "jilander-79acb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119968385962:android:1117b1e512beb3c5c339d3",
+        "android_client_info": {
+          "package_name": "com.jilander"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHqR9poLTQ-AjkTtT_L621w7X32IkakZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
