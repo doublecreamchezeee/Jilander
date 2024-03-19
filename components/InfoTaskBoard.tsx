@@ -3,7 +3,7 @@ import {
     View,
     Text,
     TextInput,
-    Button,
+    TouchableOpacity,
 } from "react-native";
 
 function InfoTaskBoard(){
@@ -27,22 +27,41 @@ function InfoTaskBoard(){
             <View style={{
                 flexDirection: "row",
                 margin: 15,
+                justifyContent: 'center',
+                alignItems: 'center', 
             }}>
                 <TextInput
+                    style={{
+                        margin: 15,
+                        fontSize: 10
+                    }}
                     placeholder="What are you doing?"
                     onChangeText={onChangeText}
                     onSubmitEditing={onSubmitEditing}
                     value={text}
                     />
-                <Button title="Submit" onPress={onSubmitEditing} />
+                <TouchableOpacity style={{
+                    backgroundColor: 'white',
+                    padding: 10,
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                    alignItems: 'center', 
+                    height: 35
+                }}
+                onPress={onSubmitEditing}>
+                    <Text style={{
+                        color: 'black',
+                        fontSize: 12,
+                        textAlign: 'center',
+                    }}>Add task</Text>
+                </TouchableOpacity>
             </View>
             <View style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.3)',
                 height: '80%',
                 width: '100%',
                 borderRadius: 5,
             }}>
-
+            
             </View>
         </View>
 

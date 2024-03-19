@@ -40,7 +40,7 @@ function HomeScreen(): React.JSX.Element{
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        {/* Render any component that consumes DaytimeContext here */}
+                        <InfoTaskBoard/>
                     </View>
                 </View>
                 <View style={{ flex: 20 }}></View>
