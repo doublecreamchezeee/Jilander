@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     margin: 15,
+    padding: 7,
     justifyContent: 'center',
     alignItems: 'center', 
   },
@@ -66,7 +67,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center', 
-    height: 35
+    height: 40,
+    width: 'auto'
   },
   buttonText: {
     color: 'black',

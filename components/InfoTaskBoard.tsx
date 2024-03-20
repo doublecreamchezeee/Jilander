@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import { 
     View,
     Text,
@@ -7,25 +7,27 @@ import {
 } from "react-native";
 import styles from '../public/css/styles'; 
 import Task from './Task'
+import database from '@react-native-firebase/database'
+
 function InfoTaskBoard(){
-    const [text, setText] = useState<string>(''); // Chỉ định kiểu dữ liệu là string
-    
-    const onChangeText = (newText: string) => { // Chỉ định kiểu dữ liệu là string
-        setText(newText);
-    };
-  
+    const [text, setText] = useState<string>('');
+    const newTaskRef = database().ref('/task/taskInfo');
+
     const onSubmitEditing = () => {
-      console.log('Task input:', text);
-      // Xử lý dữ liệu khi người dùng nhấn "Submit" hoặc "Return" trên bàn phím
-    };
+      console.log(text)
+      newTaskRef.push({
+        taskName: text.trim(),
+        taskTime: ''
+      });
+    }
+
     return (
         <View style={styles.infoTaskBoardContainer}>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.textInput}
               placeholder="What are you doing?"
-              onChangeText={onChangeText}
-              onSubmitEditing={onSubmitEditing}
+              onChangeText={setText}
               value={text}
             />
             <TouchableOpacity style={styles.addButton} onPress={onSubmitEditing}>
