@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     // width: '100%',
     justifyContent: 'center',
     alignItems: 'center', 
-
   },
   inputContainer: {
     flexDirection: "row",
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
   },
   detailTaskContainer: {
     flexDirection: 'row',
-    margin: 10,
+    margin: 5,
     width: '90%',
   },
   // task component
