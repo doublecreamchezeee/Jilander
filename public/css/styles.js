@@ -60,6 +60,10 @@ const styles = StyleSheet.create({
     margin: 15,
     fontSize: 10
   },
+  textInput2: {
+    margin: 15,
+    fontSize: 17,
+  },
   addButton: {
     backgroundColor: 'white',
     padding: 7,
@@ -67,7 +71,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center', 
     height: 40,
-    width: 'auto'
+    width: 'auto',
+    margin: 10
   },
   buttonText: {
     color: 'black',
@@ -100,7 +105,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 35,
     margin: 5,
-  }
+  },
+  detailTaskHeader: {
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    alignItems: 'center', 
+    padding: 7,
+    margin: 20,
+  },
+  dropdown: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    width: '30%',
+    maxHeight: 150,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    backgroundColor: 'white',
+    zIndex: 1,
+  },
+  option: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
+  },
 });
 
 export default styles;
