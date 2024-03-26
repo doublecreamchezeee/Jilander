@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
     width: '90%',
-    backgroundColor: 'red'
   },
   // task component
   task: {
