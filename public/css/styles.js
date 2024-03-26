@@ -84,7 +84,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     margin: 20,
+    width: '90%'
 
+  },
+  detailTaskContainer: {
+    flexDirection: 'row',
+    margin: 10,
+    width: '90%',
+    backgroundColor: 'red'
   },
   // task component
   task: {

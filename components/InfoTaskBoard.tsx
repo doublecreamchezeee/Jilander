@@ -21,13 +21,18 @@ function InfoTaskBoard(){
       });
     }
 
+    const onChangeText = (text: string) => {
+      setText(text)
+      console.log(text)
+    }
+
     return (
         <View style={styles.infoTaskBoardContainer}>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.textInput}
               placeholder="What are you doing?"
-              onChangeText={setText}
+              onChangeText={onChangeText}
               value={text}
             />
             <TouchableOpacity style={styles.addButton} onPress={onSubmitEditing}>
