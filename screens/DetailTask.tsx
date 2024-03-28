@@ -7,13 +7,24 @@ import {
     ScrollView,
 } from "react-native";
 import styles from '../public/css/styles'
-
-function DetailTask() {
-    const [newNameTask, setNewNameTask] = useState<string>('');
+import {RouteProp} from '@react-navigation/native'
+import { RootStack } from "./RootStack";
+import database from '@react-native-firebase/database'
+import { useNavigation } from "@react-navigation/native";
+type DetailTaskRouteProp = RouteProp<RootStack,"DetailTask">;
+interface DetailTaskProps{
+    route: DetailTaskRouteProp;
+}
+const DetailTask: React.FC<DetailTaskProps> = ({route}) => {
+    const navigation = useNavigation();
+    const newTaskRef = database().ref('/task/taskInfo');
+    const { id, taskName, taskTime } = route.params;
+    console.log('id task', id)
+    const [newNameTask, setNewNameTask] = useState<string>(taskName);
     const [showDropdownH, setShowDropdownH] = useState<boolean>(false);
     const [showDropdownM, setShowDropdownM] = useState<boolean>(false);
-    const [selectedHour, setSelectedHour] = useState<string>('');
-    const [selectMinute, setSelectMinute] = useState<string>('');
+    const [selectedHour, setSelectedHour] = useState<string>(taskTime.split(':')[0]);
+    const [selectedMinute, setSelectedMinute] = useState<string>(taskTime.split(':')[1]);
     const onChangeText = (inputText: string) => {
         setNewNameTask(inputText)
     }
@@ -35,7 +46,6 @@ function DetailTask() {
         '48', '49', '50', '51', '52', '53',
         '54', '55', '56', '57', '58', '59'
     ];
-
     const handleSelectHour = (time: string) => {
         console.log(time)
         setSelectedHour(time);
@@ -43,22 +53,37 @@ function DetailTask() {
     };
     const handleSelectMinute = (time: string) => {
         console.log(time)
-        setSelectMinute(time);
+        setSelectedMinute(time);
         setShowDropdownM(false);
     };
     const onSubmitEditing = () => {
-        console.log('change name', newNameTask)
-        setNewNameTask('')
+        const taskTime = `${selectedHour}:${selectedMinute}`; // Combine selectedHour and selectedMinute into a single string
+        console.log('change name', newNameTask);
+        console.log('taskTime', taskTime);
+        
+        // Thực hiện cập nhật dữ liệu trên Firebase
+        newTaskRef.child(id).update({
+            taskName: newNameTask.trim(),
+            taskTime: taskTime.trim(),
+        }).then(() => {
+            console.log('Data updated successfully!');
+            navigation.goBack();
+            setNewNameTask('');
+            setSelectedHour('');
+            setSelectedMinute('');
+        }).catch((error) => {
+            console.error('Error updating data: ', error);
+        });
     }
     return (
-        <View>
+        <View style={{backgroundColor: 'grey'}}>
             {/* header */}
             <View style={styles.detailTaskHeader}>
                 <TextInput
                     style={styles.textInput2}
                     onChangeText={onChangeText}
                     value={newNameTask}
-                    placeholder="Input new name..."
+                    placeholder={taskName}
                 />
                 <TouchableOpacity
                     style={styles.addButton}
@@ -71,7 +96,7 @@ function DetailTask() {
                     style={styles.addButton}
                     onPress={() => setShowDropdownH(!showDropdownH)}
                 >
-                    <Text style={{color: 'grey'}}>{selectedHour || 'HH'}</Text>
+                    <Text style={{color: 'grey'}}>{ selectedHour || taskTime.split(':')[0]}</Text>
                 </TouchableOpacity>
                 {showDropdownH && (
                     <ScrollView style={styles.dropdown}>
@@ -90,7 +115,7 @@ function DetailTask() {
                     style={styles.addButton}
                     onPress={() => setShowDropdownM(!showDropdownM)}
                 >
-                    <Text style={{color: 'grey'}}>{selectMinute || 'MM'}</Text>
+                    <Text style={{color: 'grey'}}>{selectedMinute || taskTime.split(':')[1]}</Text>
                 </TouchableOpacity>
                 {showDropdownM && (
                     <ScrollView style={styles.dropdown}>

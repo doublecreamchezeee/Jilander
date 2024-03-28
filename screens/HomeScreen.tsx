@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { View, ImageBackground, TextInput, TouchableOpacity, Text } from 'react-native';
 import InfoTaskBoard from '../components/InfoTaskBoard';
 import styles from '../public/css/styles'; // Import the style object
-import database from '@react-native-firebase/database'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {RootStack} from '../screens/RootStack'
 
@@ -11,7 +10,6 @@ const backgroundImagePaths: { [key: number]: any } = {
     1: require('../assets/sunset-bg-homescreen.jpg'),
     2: require('../assets/night-bg-homescreen.jpg'),
 };
-const newTaskRef = database().ref('/task/taskInfo');
 
 
 const checkTime = () => {

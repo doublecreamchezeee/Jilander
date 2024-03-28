@@ -10,6 +10,7 @@ import database from '@react-native-firebase/database'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {RootStack} from '../screens/RootStack'
 interface TaskInfo {
+  id: string;
   taskName: string;
   taskTime: string;
 }
@@ -33,7 +34,7 @@ const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
     });
     setText('')
   }
-  const onTaskPress = () => navigation.navigate("DetailTask")
+  const onTaskPress = (id:string, taskName: string, taskTime: string) => navigation.navigate("DetailTask", { id, taskName, taskTime })
   const onChangeText = (text: string) => {
     setText(text)
   }
@@ -80,7 +81,7 @@ const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
               <View key={filteredTask.taskName}>
                 <TouchableOpacity 
                   style={styles.task}
-                  onPress={onTaskPress}
+                  onPress={() => onTaskPress(filteredTask.id, filteredTask.taskName, filteredTask.taskTime)}
                 >
                   <Text style={styles.buttonText}>{filteredTask.taskTime} | {filteredTask.taskName}</Text>
                 </TouchableOpacity>
@@ -101,7 +102,7 @@ const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
               <View key={filteredTask.taskName}>
                 <TouchableOpacity 
                   style={styles.task}
-                  onPress={onTaskPress}
+                  onPress={() => onTaskPress(filteredTask.id, filteredTask.taskName, filteredTask.taskTime)}
                 >
                   <Text style={styles.buttonText}>{filteredTask.taskTime} | {filteredTask.taskName}</Text>
                 </TouchableOpacity>
@@ -122,7 +123,7 @@ const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
               <View key={filteredTask.taskName}>
                 <TouchableOpacity 
                   style={styles.task}
-                  onPress={onTaskPress}
+                  onPress={() => onTaskPress(filteredTask.id, filteredTask.taskName, filteredTask.taskTime)}
                 >
                   <Text style={styles.buttonText}>{filteredTask.taskTime} | {filteredTask.taskName}</Text>
                 </TouchableOpacity>
