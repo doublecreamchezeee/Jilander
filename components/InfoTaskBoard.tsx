@@ -7,14 +7,18 @@ import {
 } from "react-native";
 import styles from '../public/css/styles';
 import database from '@react-native-firebase/database'
-import {useNavigation} from '@react-navigation/native'
+import {NativeStackNavigationProp} from '@react-navigation/native-stack'
+import {RootStack} from '../screens/RootStack'
 interface TaskInfo {
   taskName: string;
   taskTime: string;
 }
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStack, 'HomeScreen'>;
+type Props = {
+    navigation: HomeScreenNavigationProp;
+  };
 
-function InfoTaskBoard() {
-  const navigation = useNavigation();
+const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
   const [text, setText] = useState<string>('');
   const [task, setTask] = useState<TaskInfo[]>([]);
   const newTaskRef = database().ref('/task/taskInfo');
@@ -29,7 +33,7 @@ function InfoTaskBoard() {
     });
     setText('')
   }
-
+  const onTaskPress = () => navigation.navigate("DetailTask")
   const onChangeText = (text: string) => {
     setText(text)
   }
@@ -74,7 +78,10 @@ function InfoTaskBoard() {
               return hour >= 6 && hour < 12;
             }).map(filteredTask => (
               <View key={filteredTask.taskName}>
-                <TouchableOpacity style={styles.task}>
+                <TouchableOpacity 
+                  style={styles.task}
+                  onPress={onTaskPress}
+                >
                   <Text style={styles.buttonText}>{filteredTask.taskTime} | {filteredTask.taskName}</Text>
                 </TouchableOpacity>
               </View>
@@ -92,7 +99,10 @@ function InfoTaskBoard() {
               return hour >= 12 && hour < 18;
             }).map(filteredTask => (
               <View key={filteredTask.taskName}>
-                <TouchableOpacity style={styles.task}>
+                <TouchableOpacity 
+                  style={styles.task}
+                  onPress={onTaskPress}
+                >
                   <Text style={styles.buttonText}>{filteredTask.taskTime} | {filteredTask.taskName}</Text>
                 </TouchableOpacity>
               </View>
@@ -110,7 +120,10 @@ function InfoTaskBoard() {
               return hour >= 18 || hour < 6;
             }).map(filteredTask => (
               <View key={filteredTask.taskName}>
-                <TouchableOpacity style={styles.task}>
+                <TouchableOpacity 
+                  style={styles.task}
+                  onPress={onTaskPress}
+                >
                   <Text style={styles.buttonText}>{filteredTask.taskTime} | {filteredTask.taskName}</Text>
                 </TouchableOpacity>
               </View>

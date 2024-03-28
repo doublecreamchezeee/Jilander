@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, ImageBackground, TextInput, TouchableOpacity, Text } from 'react-native';
 import InfoTaskBoard from '../components/InfoTaskBoard';
-import Daytime from '../components/Daytime';
-import { DaytimeContext, DaytimeProvider } from '../context/DaytimeContext';
 import styles from '../public/css/styles'; // Import the style object
 import database from '@react-native-firebase/database'
+import {NativeStackNavigationProp} from '@react-navigation/native-stack'
+import {RootStack} from '../screens/RootStack'
 
 const backgroundImagePaths: { [key: number]: any } = {
     0: require('../assets/dawn-bg-homescreen.jpg'),
@@ -25,8 +25,11 @@ const checkTime = () => {
         return 2
     }
 }
-
-function HomeScreen() {
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStack, 'HomeScreen'>;
+type Props = {
+    navigation: HomeScreenNavigationProp;
+  };
+const HomeScreen: React.FC<Props> = ({navigation}) => {
     const [bg, setBg] = useState<number>(checkTime());
     const onTimeCheck = () => {
         console.log('on check time')
@@ -48,7 +51,7 @@ function HomeScreen() {
                     {/* <Daytime /> */}
                 </View>
                 <View>
-                    <InfoTaskBoard/>
+                    <InfoTaskBoard navigation={navigation}/>
                 </View>
             </ImageBackground >
         </View >

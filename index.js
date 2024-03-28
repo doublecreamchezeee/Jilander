@@ -3,10 +3,28 @@
  */
 
 import {AppRegistry} from 'react-native';
-import App from './App';
-import TaskInfo from './screens/Firebase';
 import DetailTask from './screens/DetailTask';
-import HomeScreenWithDaytimeProvider from './screens/HomeScreen'
 import {name as appName} from './app.json';
+import HomeScreen from './screens/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-AppRegistry.registerComponent(appName, () => DetailTask);
+const Stack = createNativeStackNavigator();
+const MainStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="DetailTask" component={DetailTask} />
+      </Stack.Navigator>
+    );
+  };
+
+const AppContainer = () => {
+    return (
+        <NavigationContainer>
+            <MainStack/>
+        </NavigationContainer>
+    );
+};
+
+AppRegistry.registerComponent(appName, () => AppContainer);
