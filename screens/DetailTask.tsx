@@ -76,7 +76,7 @@ const DetailTask: React.FC<DetailTaskProps> = ({route}) => {
         });
     }
     return (
-        <View style={{backgroundColor: 'grey'}}>
+        <View style={{flex: 1, backgroundColor: 'grey'}}>
             {/* header */}
             <View style={styles.detailTaskHeader}>
                 <TextInput
