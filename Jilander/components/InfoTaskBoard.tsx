@@ -9,6 +9,9 @@ import styles from '../public/css/styles';
 import database from '@react-native-firebase/database'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {RootStack} from '../screens/RootStack'
+import axios from 'axios'
+
+const serverUrl = 'http://192.168.1.10:3000' 
 interface TaskInfo {
   id: string;
   taskName: string;
