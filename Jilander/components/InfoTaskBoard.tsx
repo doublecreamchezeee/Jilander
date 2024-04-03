@@ -11,7 +11,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {RootStack} from '../screens/RootStack'
 import axios from 'axios'
 
-const serverUrl = 'http://192.168.1.10:3000' 
+const serverUrl = 'http://192.168.1.2:3000' 
 interface TaskInfo {
   id: string;
   taskName: string;
@@ -25,35 +25,54 @@ type Props = {
 const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
   const [text, setText] = useState<string>('');
   const [task, setTask] = useState<TaskInfo[]>([]);
+  const [taskFetchTrigger, setTaskFetchTrigger] = useState(false);
   const newTaskRef = database().ref('/task/taskInfo');
 
-  const onSubmitEditing = () => {
+  const onSubmitEditing = async () => {
     const currentTime = new Date()
     const timeSubmit = currentTime.getHours().toString() + ":" + currentTime.getMinutes().toString()
     console.log(text)
-    newTaskRef.push({
+    await axios.post(`${serverUrl}/api/task`, {
       taskName: text.trim(),
-      taskTime: timeSubmit.trim(),
+      taskTime: timeSubmit.trim()
+    }, 
+    {
+      headers: {
+        'Content-Type': 'application/json', 
+      }
+    })
+    .then( response => {
+      console.log(response.data)
+      setText('');
+    })
+    .catch(error => {
+      console.error('Error submitting data:', error);
     });
-    setText('')
+    // newTaskRef.push({
+    //   taskName: text.trim(),
+    //   taskTime: timeSubmit.trim(),
+    // });
   }
   const onTaskPress = (id:string, taskName: string, taskTime: string) => navigation.navigate("DetailTask", { id, taskName, taskTime })
   const onChangeText = (text: string) => {
     setText(text)
   }
+
   useEffect(() => {
-    newTaskRef.once('value', (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const taskArr: TaskInfo[] = Object.keys(data).map((key) => ({
+    const fetchData = async () => {
+      try {
+        const timestamp = new Date().getTime(); // Get current timestamp
+        const response = await axios(`${serverUrl}/api/task?timestamp=${timestamp}`);
+        const taskArr = Object.keys(response.data).map((key) => ({
           id: key,
-          ...data[key]
+          ...response.data[key]
         }));
         setTask(taskArr);
+      } catch (error) {
+        console.error('Error', error);
       }
-    }, (error) => {
-      console.log(error);
-    });
+    };
+    fetchData();
   }, [task]);
   return (
     <View style={styles.infoTaskBoardContainer}>
