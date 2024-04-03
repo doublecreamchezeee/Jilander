@@ -10,7 +10,7 @@ const addTaskItem = async (req, res) => {
         taskName: taskName,
         taskTime: taskTime
     });
-    res.send('Success')
+    res.redirect('/api/task')
 };
   
 
@@ -29,7 +29,7 @@ const deleteFoodItem = (req, res) => {
     const { id } = req.params;
     // Xóa món ăn từ database Firebase
     remove(ref(database, `task/taskInfo/${id}`));
-    res.send('Món ăn đã được xóa thành công!');
+    res.send('Task đã được xóa thành công!');
 };
 
 module.exports = { addTaskItem, getAll, deleteFoodItem };

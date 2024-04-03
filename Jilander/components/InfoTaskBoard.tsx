@@ -25,7 +25,7 @@ type Props = {
 const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
   const [text, setText] = useState<string>('');
   const [task, setTask] = useState<TaskInfo[]>([]);
-  const [taskFetchTrigger, setTaskFetchTrigger] = useState(false);
+  const [taskNumber, setTaskNumber] = useState(0);
   const newTaskRef = database().ref('/task/taskInfo');
 
   const onSubmitEditing = async () => {
@@ -35,23 +35,18 @@ const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
     await axios.post(`${serverUrl}/api/task`, {
       taskName: text.trim(),
       taskTime: timeSubmit.trim()
-    }, 
-    {
-      headers: {
-        'Content-Type': 'application/json', 
-      }
     })
     .then( response => {
-      console.log(response.data)
+      const taskArr = Object.keys(response.data).map((key) => ({
+        id: key,
+        ...response.data[key]
+      }));
+      setTask(taskArr);
       setText('');
     })
     .catch(error => {
       console.error('Error submitting data:', error);
     });
-    // newTaskRef.push({
-    //   taskName: text.trim(),
-    //   taskTime: timeSubmit.trim(),
-    // });
   }
   const onTaskPress = (id:string, taskName: string, taskTime: string) => navigation.navigate("DetailTask", { id, taskName, taskTime })
   const onChangeText = (text: string) => {
@@ -67,13 +62,16 @@ const InfoTaskBoard: React.FC<Props> = ({navigation}) => {
           id: key,
           ...response.data[key]
         }));
-        setTask(taskArr);
+        if (taskNumber != taskArr.length){
+          setTask(taskArr);
+          setTaskNumber(taskArr.length)
+        }
       } catch (error) {
         console.error('Error', error);
       }
     };
     fetchData();
-  }, [task]);
+  }, []);
   return (
     <View style={styles.infoTaskBoardContainer}>
       <View style={styles.inputContainer}>
